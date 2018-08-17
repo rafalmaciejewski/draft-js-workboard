@@ -1,9 +1,15 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
+import styled from 'styled-components';
 
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import './App.css';
+const Title = styled.h1`
+  color: red;
+`;
+
+const EditorWrapper = styled.div`
+  margin: 20px;
+`;
 
 class App extends Component {
 
@@ -17,14 +23,17 @@ class App extends Component {
     onEditorStateChange = (editorState) => this.setState({editorState});
 
     render() {
-        const { editorState } = this.state;
+        const {editorState} = this.state;
         return (
-            <Editor
-                editorState={editorState}
-                wrapperClassName="demo-wrapper"
-                editorClassName="demo-editor"
-                onEditorStateChange={this.onEditorStateChange}
-            />
+            <EditorWrapper>
+                <Title>draft-js-workboard</Title>
+                <Editor
+                    editorState={editorState}
+                    wrapperClassName="demo-wrapper"
+                    editorClassName="demo-editor"
+                    onEditorStateChange={this.onEditorStateChange}
+                />
+            </EditorWrapper>
         )
     }
 }
