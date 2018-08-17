@@ -1,21 +1,32 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
+import { EditorState } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './App.css';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            editorState: EditorState.createEmpty(),
+        };
+    }
+
+    onEditorStateChange = (editorState) => this.setState({editorState});
+
+    render() {
+        const { editorState } = this.state;
+        return (
+            <Editor
+                editorState={editorState}
+                wrapperClassName="demo-wrapper"
+                editorClassName="demo-editor"
+                onEditorStateChange={this.onEditorStateChange}
+            />
+        )
+    }
 }
 
 export default App;
