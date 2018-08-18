@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import styled from 'styled-components';
+import {stateFromHTML, stateToHTML} from './utils';
 
 const Title = styled.h1`
   color: red;
@@ -17,10 +18,24 @@ class App extends Component {
         super(props);
         this.state = {
             editorState: EditorState.createEmpty(),
+            html: '',
         };
     }
 
-    onEditorStateChange = (editorState) => this.setState({editorState});
+    handleEditorStateChange = (editorState) => {
+        this.setState({
+            editorState,
+            html: stateToHTML(editorState),
+        });
+    };
+
+    handleHTMLChange = (e) => {
+        const html = e.target.value;
+        this.setState({
+            editorState: stateFromHTML(this.state.editorState, html),
+            html: e.target.value,
+        });
+    };
 
     render() {
         const {editorState} = this.state;
@@ -31,7 +46,7 @@ class App extends Component {
                     editorState={editorState}
                     wrapperClassName="demo-wrapper"
                     editorClassName="demo-editor"
-                    onEditorStateChange={this.onEditorStateChange}
+                    onEditorStateChange={this.handleEditorStateChange}
                     toolbar={{
                         options: ['link'],
                         link: {
@@ -42,6 +57,10 @@ class App extends Component {
                             options: ['link', 'unlink'],
                         },
                     }}
+                />
+                <textarea
+                    onChange={this.handleHTMLChange}
+                    value={this.state.html}
                 />
             </EditorWrapper>
         )
