@@ -32,6 +32,16 @@ class App extends Component {
                     wrapperClassName="demo-wrapper"
                     editorClassName="demo-editor"
                     onEditorStateChange={this.onEditorStateChange}
+                    toolbar={{
+                        options: ['link'],
+                        link: {
+                            inDropdown: false,
+                            component: undefined,
+                            showOpenOptionOnHover: false,
+                            defaultTargetOption: '_blank',
+                            options: ['link', 'unlink'],
+                        },
+                    }}
                 />
             </EditorWrapper>
         )
